@@ -1,0 +1,12 @@
+XTerm*faceName: Ubuntu Mono
+XTerm*faceSize: 11
+XTerm*scaleHeight: 1.1
+XTerm*boldMode: false
+XTerm*background: #242424
+XTerm*foreground: #eeeeee
+
+XTerm*saveLines: 999999
+XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
+
+XTerm*metaSendsEscape: true
+
