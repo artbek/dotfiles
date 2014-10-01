@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ./cdup/cdup.sh
+CURRENT_DIR=$(dirname "${BASH_SOURCE}")
+source ${CURRENT_DIR}/cdup/cdup.sh
+
 
 function PWD {
 	folders=(`echo $(pwd) | sed 's!/! !g'`)
