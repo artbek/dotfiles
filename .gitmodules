@@ -1,6 +1,6 @@
 [submodule "cdup"]
 	path = cdup
-	url = git@github.com:artbek/cd-up.git
+	url = https://github.com/artbek/cd-up.git
 [submodule ".vim/plugin/bbuf"]
 	path = .vim/plugin/bbuf
-	url = git@github.com:artbek/Vim-Buffers.git
+	url = https://github.com/artbek/Vim-Buffers.git
