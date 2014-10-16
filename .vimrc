@@ -37,9 +37,11 @@ set statusline=%m\ %t\ [%{&l:fileformat}]\ %=%l/%L\ (%c)\ %P\
 set scroll=1
 
 if has("autocmd")
-	let &t_SI = "\<Esc>[\x36 q"
-	let &t_EI = "\<Esc>[\x30 q"
-	au VimLeave * silent !echo -ne "\e[\x30 q"
+	if ($VIM_CHANGE_CURSOR_SHAPE == 1)
+		let &t_SI = "\<Esc>[\x36 q"
+		let &t_EI = "\<Esc>[\x30 q"
+		au VimLeave * silent !echo -ne "\e[\x30 q"
+	endif
 	au! BufWritePost *.php call PhpSyntax()
 endif
 
