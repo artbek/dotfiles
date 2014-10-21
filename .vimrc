@@ -32,7 +32,7 @@ set shiftwidth=2
 set wrap
 set linebreak
 
-set autochdir
+"set autochdir
 let g:netrw_altfile = 1
 
 set laststatus=2
