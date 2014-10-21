@@ -11,7 +11,11 @@ syntax on
 set nobackup
 set nowritebackup
 set noswapfile
-set noesckeys
+
+" some people can't live without their arrows
+if ($VIM_NOESCKEYS == 1)
+	set noesckeys
+endif
 
 set ignorecase
 set smartcase
