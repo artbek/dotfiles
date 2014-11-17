@@ -11,7 +11,9 @@ syntax on
 set nobackup
 set nowritebackup
 set noswapfile
-set noundofile
+if v:version > 702
+	set noundofile
+endif
 
 " some people can't live without their arrows
 if ($VIM_NOESCKEYS == 1)
