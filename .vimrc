@@ -97,17 +97,21 @@ fun! PhpSyntax()
 endfun
 
 
-fun! DeleteAllBuffers()
-	redir => l:buflist
-	silent ls
-	redir END
+if has("listcmds")
 
-	let l:bufitems = split(l:buflist, "\n")
-	let l:buffers_string = ''
-	for l:i in l:bufitems
-		let l:items = split(l:i, ' ')
-		let l:buffers_string = l:buffers_string . ' ' . l:items[0]
-	endfor
-	execute("bd " . l:buffers_string)
-endfun
+	fun! DeleteAllBuffers()
+		redir => l:buflist
+		silent ls
+		redir END
+
+		let l:bufitems = split(l:buflist, "\n")
+		let l:buffers_string = ''
+		for l:i in l:bufitems
+			let l:items = split(l:i, ' ')
+			let l:buffers_string = l:buffers_string . ' ' . l:items[0]
+		endfor
+		execute("bd " . l:buffers_string)
+	endfun
+
+endif
 
