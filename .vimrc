@@ -1,6 +1,10 @@
 """ SETTINGS
 
+" external plugins
 execute pathogen#infect()
+let g:ctrlp_cmd = 'CtrlPBuffer'
+
+" vim built-in
 
 colorscheme kolor
 set fileencoding=utf8
