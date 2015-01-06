@@ -1,5 +1,7 @@
 """ SETTINGS
 
+execute pathogen#infect()
+
 colorscheme kolor
 set fileencoding=utf8
 set fileformats=unix,dos,mac
