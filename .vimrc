@@ -59,22 +59,23 @@ if has("autocmd")
 endif
 
 
+let mapleader = ","
+
+
 
 """ KEY BINDINGS
 
-" XML parsing
+" XML format
 nnoremap <F6> :%s/></>\r</g<CR><S-V>gg=
+
+" XML close tag
+inoremap <leader>x </<C-x><C-o><Right>
 
 " general
 nnoremap <F8> :noh<CR>:call clearmatches()<CR>
 nnoremap <F9> :call Bbuf2()<CR>
 nnoremap <S-F9> :e.<CR>
 nnoremap <C-k><C-k> :b#<CR>
-
-" var_dump()
-inoremap <leader>p var_dump();<LEFT><LEFT>
-vnoremap <leader>p cvar_dump(<Esc>pa);
-nnoremap <leader>p viwohyovar_dump(<Esc>pa); die;
 
 " CTRL-S save (+ 'ssty -ixon' in .bashrc)
 nnoremap <C-s> :update<CR>
@@ -83,6 +84,16 @@ vnoremap <C-s> <Esc>:update<CR>
 
 " trailig spaces
 nnoremap <leader>e :%s/\s\+$//<CR>
+
+" ctags
+nmap <C-t> :call PopFromTagStack()<CR>
+nnoremap <leader>t g<C-]>
+
+" PHP
+inoremap <leader>a ->
+inoremap <leader>v var_dump();<LEFT><LEFT>
+vnoremap <leader>v cvar_dump(<Esc>pa);
+nnoremap <leader>v viwohyovar_dump(<Esc>pa); die;
 
 
 
@@ -120,4 +131,14 @@ if has("listcmds")
 	endfun
 
 endif
+
+
+fun! PopFromTagStack()
+	let l:prev_buffer = bufname('%')
+	pop
+	let l:curr_buffer = bufname('%')
+	if (l:curr_buffer != l:prev_buffer)
+		bd #
+	endif
+endfun
 
