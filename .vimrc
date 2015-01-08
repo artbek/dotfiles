@@ -1,8 +1,10 @@
 """ SETTINGS
 
 " external plugins
+
 execute pathogen#infect()
 let g:ctrlp_cmd = 'CtrlPBuffer'
+
 
 " vim built-in
 
@@ -58,8 +60,8 @@ if has("autocmd")
 	au! BufWritePost *.php call PhpSyntax()
 endif
 
-
 let mapleader = ","
+set timeoutlen=200
 
 
 
