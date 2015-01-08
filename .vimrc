@@ -84,6 +84,11 @@ nnoremap <C-s> :update<CR>
 inoremap <C-s> <Esc>:update<CR>
 vnoremap <C-s> <Esc>:update<CR>
 
+" saving
+nnoremap <leader>s :update<CR>
+inoremap <leader>s <Esc>:update<CR>
+vnoremap <leader>s <Esc>:update<CR>
+
 " trailig spaces
 nnoremap <leader>e :%s/\s\+$//<CR>
 
