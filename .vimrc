@@ -79,6 +79,14 @@ nnoremap <F9> :call Bbuf2()<CR>
 nnoremap <S-F9> :e.<CR>
 nnoremap <C-k><C-k> :b#<CR>
 
+" more natural cursor jumps
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
+
 " CTRL-S save (+ 'ssty -ixon' in .bashrc)
 nnoremap <C-s> :update<CR>
 inoremap <C-s> <Esc>:update<CR>
