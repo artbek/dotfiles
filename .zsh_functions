@@ -1,0 +1,65 @@
+# export example=(
+# 	example_user
+# 	example.host.com
+# 	example/remote/dir
+# 	example/local/dir/prefix.
+# )
+#
+# $ my_ssh $example
+# $ my_mount $example
+
+function my_ssh()
+{
+	eval REMOTE_USER=${1}
+	eval REMOTE_HOST=${2}
+
+	set -x
+	ssh "${REMOTE_USER}@${REMOTE_HOST}"
+	set +x
+}
+
+
+function my_mount()
+{
+	set -x
+	REMOTE_SERVER=${1}@${2}
+	REMOTE_DIR=${3}
+	LOCAL_DIR_PREFIX=${4}
+	LOCAL_DIR=${LOCAL_DIR_PREFIX}${2}
+	set +x
+
+	mkdir -p $LOCAL_DIR
+
+	sudo sshfs $REMOTE_SERVER:$REMOTE_DIR $LOCAL_DIR \
+		-o allow_other \
+		-o IdentityFile=/home/work/.ssh/id_rsa \
+		-o cache=yes \
+		-o kernel_cache \
+		-o cache_timeout=300 \
+		-o compression=yes \
+		-o no_readahead
+}
+
+
+function set_tty_colours()
+{
+	echo -en "\e]P0282a2e
+	echo -en "\e]P1a54242
+	echo -en "\e]P28c9440
+	echo -en "\e]P3de935f
+	echo -en "\e]P45f819d
+	echo -en "\e]P585678f
+	echo -en "\e]P65e8d87
+	echo -en "\e]P7cccccc
+
+	echo -en "\e]P8373b41
+	echo -en "\e]P9cc6666
+	echo -en "\e]PAb5bd68
+	echo -en "\e]PBf0c674
+	echo -en "\e]PC81a2be
+	echo -en "\e]PDb294bb
+	echo -en "\e]PE8abeb7
+	echo -en "\e]PFc5c8c6
+
+	clear
+}
