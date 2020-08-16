@@ -74,7 +74,7 @@ nnoremap <F6> :%s/></>\r</g<CR><S-V>gg=
 inoremap <leader>x </<C-x><C-o><Right>
 
 " general
-nnoremap <F8> :noh<CR>:call clearmatches()<CR>
+nnoremap <leader>c :noh<CR>:call clearmatches()<CR>
 nnoremap <F9> :call Bbuf2()<CR>
 nnoremap <S-F9> :e.<CR>
 nnoremap <C-k><C-k> :b#<CR>
