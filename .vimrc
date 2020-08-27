@@ -40,6 +40,7 @@ set hidden
 
 set tabstop=2
 set shiftwidth=2
+set noexpandtab
 set wrap
 set linebreak
 
@@ -85,6 +86,8 @@ fun! AutoRsync()
 endfun
 au! BufWritePost * call AutoRsync()
 
+
+au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 
 """ KEY BINDINGS
