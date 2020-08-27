@@ -63,3 +63,28 @@ function set_tty_colours()
 
 	clear
 }
+
+
+function timer()
+{
+	STEP=5
+
+	INITIAL_MINUTES=${1}
+	REMAINING_SECONDS=$(( INITIAL_MINUTES * 60 ))
+
+	while (( REMAINING_SECONDS > 0 ))
+	do
+		REMAINING_TIME=$(printf "%0.2d:%0.2d" $(( REMAINING_SECONDS / 60 )) $(( REMAINING_SECONDS % 60 )))
+		echo ${REMAINING_TIME} > $HOME/.timer
+
+		(( REMAINING_SECONDS -= STEP ))
+
+		sleep ${STEP}
+	done
+
+	if [ -f $HOME/.timer.ping.mp3 ]; then
+		ffplay -loglevel quiet -nodisp -autoexit $HOME/.timer.ping.mp3 2>/dev/null
+	fi
+
+	echo "00:00" > $HOME/.timer
+}
