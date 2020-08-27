@@ -179,3 +179,10 @@ fun! PopFromTagStack()
 	endif
 endfun
 
+
+""" OVERRIDES
+
+if (filereadable(expand("~/.vimrc.overrides")))
+    source ~/.vimrc.overrides
+endif
+
