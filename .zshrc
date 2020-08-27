@@ -9,7 +9,8 @@ export SAVEHIST=2000
 setopt appendhistory
 
 setopt PROMPT_SUBST
-export PROMPT='%F{208}[$(pwd)]%F{210}[%?]%f '
+export PROMPT='%F{154}[$(pwd)]%F{244}[%?]%f ' # GREEN
+#export PROMPT='%F{214}[$(pwd)]%F{58}[%?]%f ' # ORANGE
 
 bindkey -e
 
