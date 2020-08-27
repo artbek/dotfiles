@@ -64,6 +64,28 @@ let mapleader = ","
 set timeoutlen=200
 
 
+fun! AutoRsync()
+	let l:config_file = '.rsync'
+	if findfile('.rsync') == l:config_file
+		let l:remote_dir = readfile(l:config_file)[0]
+
+		" bufname() occasionally changes format output, between relative and absolute
+		let l:local_filepath = fnamemodify(bufname("%"), ":.")
+
+		" don't do anything if it's an absolute path
+		if (l:local_filepath[0] == '/')
+			return 0
+		endif
+
+		let l:remote_filepath = l:remote_dir . '/' . l:local_filepath
+
+		let l:rsync_cmd = 'rsync -va ' . l:local_filepath . ' ' . l:remote_filepath
+		call system(l:rsync_cmd)
+	endif
+endfun
+au! BufWritePost * call AutoRsync()
+
+
 
 """ KEY BINDINGS
 
