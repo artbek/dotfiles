@@ -154,6 +154,36 @@ fun! PhpSyntax()
 endfun
 
 
+fun! PhpArrayAlign() range
+    let l:max_length = 0
+    for l:line_number in range(a:firstline, a:lastline)
+        let l:parts = split(getline(l:line_number), '=>')
+        if (len(l:parts) != 2)
+            continue
+        endif
+
+        let l:length = strlen(l:parts[0])
+        if (l:length > l:max_length)
+            let l:max_length = l:length
+        endif
+    endfor
+
+    for l:line_number in range(a:firstline, a:lastline)
+        let l:parts = split(getline(l:line_number), '=>')
+        if (len(l:parts) != 2)
+            continue
+        endif
+
+        let l:length = strlen(l:parts[0])
+        let l:padding_length = l:max_length - l:length
+        let l:padding = repeat(' ', l:padding_length)
+        let l:updated_line = l:parts[0] . l:padding . ' => ' . trim(l:parts[1])
+
+        call setline(l:line_number, l:updated_line)
+    endfor
+endfun
+
+
 if has("listcmds")
 
 	fun! DeleteAllBuffers()
