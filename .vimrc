@@ -65,6 +65,8 @@ let mapleader = ","
 set timeoutlen=200
 
 
+let g:netrw_dirhistmax = 0
+
 fun! AutoRsync()
 	let l:config_file = '.rsync'
 	if findfile('.rsync') == l:config_file
