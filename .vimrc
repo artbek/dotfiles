@@ -46,6 +46,7 @@ set linebreak
 
 "set autochdir
 let g:netrw_altfile = 1
+let g:netrw_dirhistmax = 0
 
 set laststatus=2
 set statusline=%m\ %t\ [%{&l:fileformat}]\ %=%l/%L\ (%c)\ %P\
@@ -59,38 +60,12 @@ if has("autocmd")
 		au VimLeave * silent !echo -ne "\e[\x30 q"
 	endif
 	au! BufWritePost *.php call PhpSyntax()
+	au! BufWritePost * call AutoRsync()
+	au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 endif
 
 let mapleader = ","
 set timeoutlen=200
-
-
-let g:netrw_dirhistmax = 0
-
-fun! AutoRsync()
-	let l:config_file = '.rsync'
-	if findfile('.rsync') == l:config_file
-		let l:remote_dir = readfile(l:config_file)[0]
-
-		" bufname() occasionally changes format output, between relative and absolute
-		let l:local_filepath = fnamemodify(bufname("%"), ":.")
-
-		" don't do anything if it's an absolute path
-		if (l:local_filepath[0] == '/')
-			return 0
-		endif
-
-		let l:remote_filepath = l:remote_dir . '/' . l:local_filepath
-
-		let l:rsync_cmd = 'rsync -va ' . l:local_filepath . ' ' . l:remote_filepath
-		call system(l:rsync_cmd)
-		redraw!
-	endif
-endfun
-au! BufWritePost * call AutoRsync()
-
-
-au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 
 
@@ -232,6 +207,28 @@ fun! RangerFileExplorer()
 	endif
 
 	redraw!
+endfun
+
+
+fun! AutoRsync()
+	let l:config_file = '.rsync'
+	if findfile('.rsync') == l:config_file
+		let l:remote_dir = readfile(l:config_file)[0]
+
+		" bufname() occasionally changes format output, between relative and absolute
+		let l:local_filepath = fnamemodify(bufname("%"), ":.")
+
+		" don't do anything if it's an absolute path
+		if (l:local_filepath[0] == '/')
+			return 0
+		endif
+
+		let l:remote_filepath = l:remote_dir . '/' . l:local_filepath
+
+		let l:rsync_cmd = 'rsync -va ' . l:local_filepath . ' ' . l:remote_filepath
+		call system(l:rsync_cmd)
+		redraw!
+	endif
 endfun
 
 
