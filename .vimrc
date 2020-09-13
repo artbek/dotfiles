@@ -60,7 +60,8 @@ if has("autocmd")
 		au VimLeave * silent !echo -ne "\e[\x30 q"
 	endif
 	au! BufWritePost *.php call PhpSyntax()
-	au! BufWritePost * call AutoRsync()
+	au! BufWritePost *.php call AutoRsyncPhp()
+	au! BufWritePost *{.php}\@<! call AutoRsync()
 	au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 endif
 
@@ -130,6 +131,9 @@ fun! PhpSyntax()
 			let l:line = substitute(l:line, "\r", "", "")
 			echom l:line
 		endfor
+		return 1
+	else
+		return 0
 	endif
 endfun
 
@@ -228,6 +232,13 @@ fun! AutoRsync()
 		let l:rsync_cmd = 'rsync -va ' . l:local_filepath . ' ' . l:remote_filepath
 		call system(l:rsync_cmd)
 		redraw!
+	endif
+endfun
+
+
+fun! AutoRsyncPhp()
+	if (PhpSyntax() == 0)
+		call AutoRsync()
 	endif
 endfun
 
