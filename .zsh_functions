@@ -86,5 +86,5 @@ function timer()
 		ffplay -loglevel quiet -nodisp -autoexit $HOME/.timer.ping.mp3 2>/dev/null
 	fi
 
-	echo "00:00" > $HOME/.timer
+	rm $HOME/.timer
 }
