@@ -22,7 +22,13 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 bindkey "^U" backward-kill-line
+bindkey "^ " expand-or-complete
 
+up-directory() {
+	builtin cd .. && zle reset-prompt
+}
+zle -N up-directory
+bindkey "^[h" up-directory
 
 ### ALIASES
 
