@@ -84,12 +84,14 @@ fun! AutoRsync()
 
 		let l:rsync_cmd = 'rsync -va ' . l:local_filepath . ' ' . l:remote_filepath
 		call system(l:rsync_cmd)
+		redraw!
 	endif
 endfun
 au! BufWritePost * call AutoRsync()
 
 
 au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
 
 
 """ KEY BINDINGS
