@@ -24,7 +24,7 @@ if v:version > 702
 endif
 
 " some people can't live without their arrows
-if ($VIM_NOESCKEYS == 1)
+if (!has('nvim') && $VIM_NOESCKEYS == 1)
 	set noesckeys
 endif
 
