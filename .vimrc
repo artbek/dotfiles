@@ -8,7 +8,7 @@ let g:ctrlp_cmd = 'CtrlPBuffer'
 
 " vim built-in
 
-colorscheme kolor
+colorscheme miramare
 set fileencoding=utf8
 set fileformats=unix,dos,mac
 
