@@ -10,7 +10,7 @@ setopt appendhistory
 
 setopt PROMPT_SUBST
 export PROMPT='%F{154}[$(pwd)]%F{244}[%?]%f ' # GREEN
-#export PROMPT='%F{214}[$(pwd)]%F{58}[%?]%f ' # ORANGE
+export PROMPT='%F{214}[$(pwd | perl -pe "s#.+(/[^/]+/[^/]+/[^/]+$)#...\1#")]%F{58}[%?]%f ' # ORANGE
 
 bindkey -e
 
