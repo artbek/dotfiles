@@ -107,6 +107,7 @@ nnoremap <leader>c :noh<CR>:call clearmatches()<CR>
 nnoremap <F9> :call Bbuf2()<CR>
 nnoremap <S-F9> :e.<CR>
 nnoremap <C-k><C-k> :b#<CR>
+nnoremap <leader>r :call RangerFileExplorer()<CR>
 
 " more natural cursor jumps
 nnoremap j gj
@@ -217,9 +218,26 @@ fun! PopFromTagStack()
 endfun
 
 
+" Inspired by:
+" https://github.com/ranger/ranger/blob/master/examples/vim_file_chooser.vim
+fun! RangerFileExplorer()
+	let temp = tempname()
+	exec 'silent !ranger --choosefile=' . shellescape(temp)
+
+	if filereadable(temp)
+		let name = readfile(temp)
+		if ! empty(name)
+			exec 'edit ' . fnameescape(name[0])
+		endif
+	endif
+
+	redraw!
+endfun
+
+
+
 """ OVERRIDES
 
 if (filereadable(expand("~/.vimrc.overrides")))
     source ~/.vimrc.overrides
 endif
-
