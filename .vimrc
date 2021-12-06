@@ -65,8 +65,8 @@ if has("autocmd")
 	au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 endif
 
-let mapleader = ","
-set timeoutlen=200
+let mapleader = "j"
+set timeoutlen=120
 
 
 
@@ -82,8 +82,12 @@ inoremap <leader>x </<C-x><C-o><Right>
 nnoremap <leader>c :noh<CR>:call clearmatches()<CR>
 nnoremap <F9> :call Bbuf2()<CR>
 nnoremap <S-F9> :e.<CR>
-nnoremap <C-k><C-k> :b#<CR>
-nnoremap <leader>r :call RangerFileExplorer()<CR>
+nnoremap <leader>l :b#<CR>
+"nnoremap <leader>r :call RangerFileExplorer()<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>f :e <C-r>+<CR>
+"nnoremap <leader>o :e.<CR>
+nnoremap <leader>o :call OpenRangerFileExplorerNeoVim()<CR>
 
 " more natural cursor jumps
 nnoremap j gj
@@ -99,12 +103,12 @@ inoremap <C-s> <Esc>:update<CR>
 vnoremap <C-s> <Esc>:update<CR>
 
 " saving
-nnoremap <leader>s :update<CR>
-inoremap <leader>s <Esc>:update<CR>
-vnoremap <leader>s <Esc>:update<CR>
+nnoremap <leader>s :write<CR>
+inoremap <leader>s <Esc>:write<CR>
+vnoremap <leader>s <Esc>:write<CR>
 
 " trailig spaces
-nnoremap <leader>e :%s/\s\+$//<CR>
+nnoremap <leader>y :%s/\s\+$//<CR>
 
 " ctags
 nmap <C-t> :call PopFromTagStack()<CR>
@@ -114,14 +118,14 @@ nnoremap <leader>t g<C-]>
 inoremap <leader>a ->
 inoremap <leader>v var_dump();<LEFT><LEFT>
 vnoremap <leader>v cvar_dump(<Esc>pa);
-nnoremap <leader>v viwohyovar_dump(<Esc>pa); die;
+nnoremap <leader>v viwohyovar_dump(<Esc>pa); exit;
 
 
 
 """ FUNCTIONS
 
 fun! PhpSyntax()
-	let l:php_syntax_output = system('php -l ' . bufname('%'))
+	let l:php_syntax_output = system('php7 -l ' . bufname('%'))
 	let l:sphp = split(l:php_syntax_output, "\n")
 
 	if (l:sphp[0] !~ "No syntax errors detected")
@@ -199,7 +203,7 @@ endfun
 
 " Inspired by:
 " https://github.com/ranger/ranger/blob/master/examples/vim_file_chooser.vim
-fun! RangerFileExplorer()
+fun! OpenRangerFileExplorerVim()
 	let temp = tempname()
 	exec 'silent !ranger --choosefile=' . shellescape(temp)
 
@@ -211,6 +215,26 @@ fun! RangerFileExplorer()
 	endif
 
 	redraw!
+endfun
+
+
+" Inspired by:
+" https://github.com/ranger/ranger/issues/279#issuecomment-156718362
+fun! OpenRangerFileExplorerNeoVim()
+	let rangerCallback = { 'name': 'ranger' }
+
+	fun! rangerCallback.on_exit(id, code, event)
+		try
+				if filereadable('/tmp/chosenfile')
+            exec 'edit ' . readfile('/tmp/chosenfile')[0]
+            call system('rm /tmp/chosenfile')
+        endif
+		endtry
+	endfun
+
+	enew
+	call termopen('ranger --choosefile=/tmp/chosenfile', rangerCallback)
+	startinsert
 endfun
 
 
@@ -229,7 +253,7 @@ fun! AutoRsync()
 
 		let l:remote_filepath = l:remote_dir . '/' . l:local_filepath
 
-		let l:rsync_cmd = 'rsync -va ' . l:local_filepath . ' ' . l:remote_filepath
+		let l:rsync_cmd = 'rsync --timeout=3 -va ' . l:local_filepath . ' ' . l:remote_filepath
 		call system(l:rsync_cmd)
 		redraw!
 	endif

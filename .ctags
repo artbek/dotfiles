@@ -2,7 +2,10 @@
 --tag-relative=yes
 --exclude=.git
 --exclude=*.js
+--exclude=*.json
 --exclude=*.css
+--exclude=*.sql
+--exclude=node_modules
 --links=no
 
 --PHP-kinds=+cfdi-alntv
