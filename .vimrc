@@ -32,14 +32,14 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-set nocursorline
+set cursorline
 set nocursorcolumn
 
 set showcmd
 set hidden
 
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set noexpandtab
 set wrap
 set linebreak
@@ -65,8 +65,12 @@ if has("autocmd")
 	au! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 endif
 
-let mapleader = "j"
+let mapleader=";"
+
 set timeoutlen=120
+
+" Disable mouse to be able to auto-copy selected text
+set mouse=
 
 
 
@@ -82,7 +86,7 @@ inoremap <leader>x </<C-x><C-o><Right>
 nnoremap <leader>c :noh<CR>:call clearmatches()<CR>
 nnoremap <F9> :call Bbuf2()<CR>
 nnoremap <S-F9> :e.<CR>
-nnoremap <leader>l :b#<CR>
+nnoremap <leader>j :b#<CR>
 "nnoremap <leader>r :call RangerFileExplorer()<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>f :e <C-r>+<CR>
@@ -108,10 +112,10 @@ inoremap <leader>s <Esc>:write<CR>
 vnoremap <leader>s <Esc>:write<CR>
 
 " trailig spaces
-nnoremap <leader>y :%s/\s\+$//<CR>
+nnoremap <leader>e :%s/\s\+$//<CR>
 
 " ctags
-nmap <C-t> :call PopFromTagStack()<CR>
+nnoremap <C-t> :call PopFromTagStack()<CR>
 nnoremap <leader>t g<C-]>
 
 " PHP
@@ -125,7 +129,7 @@ nnoremap <leader>v viwohyovar_dump(<Esc>pa); exit;
 """ FUNCTIONS
 
 fun! PhpSyntax()
-	let l:php_syntax_output = system('php7 -l ' . bufname('%'))
+	let l:php_syntax_output = system('php -l ' . bufname('%'))
 	let l:sphp = split(l:php_syntax_output, "\n")
 
 	if (l:sphp[0] !~ "No syntax errors detected")
